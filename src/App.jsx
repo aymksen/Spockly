@@ -11,6 +11,7 @@ import RunRButton from "./components/RunRButton";
 export default function App() {
   const [code, setCode] = useState("// drag blocks to generate code");
   const [rOut, setROut] = useState("");
+  const [plotUrl, setPlotUrl] = useState(null);
   const blocklyRef        = useRef(null);
     /* click handlers */
   const genPython = () => blocklyRef.current?.generatePython();
@@ -37,7 +38,7 @@ export default function App() {
         <div className="io-holder">
 
   {/* — Generated Python Code — */}
-  <h2>Generated Python Code</h2>
+  <h2>Generated Code</h2>
   <CodeDisplay code={code} />
 
   <GenerateButton
@@ -45,7 +46,6 @@ export default function App() {
     onClick={genPython}
     className="full-width"
   />
-
   {/* — Runtime Output — */}
   <h2 style={{ marginTop: "2rem" }}>Output</h2>
   <div className="output-box">{rOut || "—"}</div>
@@ -54,9 +54,25 @@ export default function App() {
   <div className="btn-row bottom">
     <GenerateButton label="Generate R Code"
                     onClick={genR} />
-    <RunRButton     code={code}
-                    onOutput={setROut} />
+    <RunRButton
+        code={code}
+        onOutput={setROut}
+        onPlot={setPlotUrl}        /* ← add this */
+      />
   </div>
+      {/* insert your plot image under the buttons */}
+    {plotUrl && (
+      <img
+        src={plotUrl}
+        alt="R plot"
+        style={{
+          maxWidth: "100%",
+          marginTop: "1rem",
+          borderRadius: "8px",
+          boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
+        }}
+      />
+    )}
 </div>
       </div>
     </div>

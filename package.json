@@ -13,10 +13,10 @@
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
-    "@r-wasm/webr": "^0.2.0",
     "blockly": "^11.2.2",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "webr": "^0.4.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",

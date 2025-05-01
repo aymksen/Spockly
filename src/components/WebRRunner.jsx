@@ -1,6 +1,6 @@
 // components/WebRRunner.js
 import React, { useState, useEffect } from "react";
-import { WebR } from "@r-wasm/webr"; // Correct import
+import { WebR } from "webr"; // Correct import
 
 const webR = new WebR();
 
@@ -9,18 +9,24 @@ const WebRRunner = ({ code }) => {
 
   // Initialize WebR only once when the component mounts
   useEffect(() => {
-    const initWebR = async () => {
+    (async () => {
       try {
-        // Initialize WebR environment
-        await webR.init();
-        console.log("WebR initialized");
+        await webR.init({
+          baseUrl: "https://unpkg.com/webr@latest/dist/"
+        });
+        // unregister any old service‐workers
+        if ("serviceWorker" in navigator) {
+          (await navigator.serviceWorker.getRegistrations())
+            .forEach(r => r.unregister());
+        }
+        console.log("WebR initialized from webr@latest");
       } catch (err) {
-        console.error("WebR initialization failed:", err);
+        console.error("WebR init failed:", err);
         setOutput(`Error initializing WebR: ${err.message}`);
       }
-    };
-    initWebR();
-  }, []); // Empty dependency array means this runs once on mount
+    })();
+  }, []);
+
 
   // Function to run R code
   const runCode = async () => {

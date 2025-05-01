@@ -1,6 +1,6 @@
 // RunRButton.jsx
 import React, { useEffect, useState } from "react";
-import { WebR } from "@r-wasm/webr";
+import { WebR } from "webr";
 
 const webR = new WebR();          // shared singleton
 
